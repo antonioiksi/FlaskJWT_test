@@ -46,6 +46,22 @@ def protected():
     return '%s' % current_identity
 
 
+@app.route('/on')
+@jwt_required()
+def on():
+    # insert code for RASPBERRY
+    result = {"message": "Device is ON"}
+    return result
+
+
+@app.route('/off')
+@jwt_required()
+def off():
+    # insert code for RASPBERRY
+    result = {"message": "Device is OFF"}
+    return result
+
+
 @app.route('/free')
 def free():
     return "Hello free"
