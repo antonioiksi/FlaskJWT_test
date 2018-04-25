@@ -12,6 +12,7 @@
 }
 ```
 
+## Install and Run
 
 1. Install git on respberry
 `sudo apt-get install git`
