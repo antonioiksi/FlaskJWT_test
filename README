@@ -1,0 +1,8 @@
+
+https://pythonhosted.org/Flask-JWT/
+
+http://polyglot.ninja/jwt-authentication-python-flask/
+
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjQ0MjAyMTUsImlhdCI6MTUyNDQxOTkxNSwibmJmIjoxNTI0NDE5OTE1LCJpZGVudGl0eSI6MX0.RIzLFtgR7w_qhKE0ZAu-Gl4S6Jp4duOMotCpUcp9Nws"
+}
