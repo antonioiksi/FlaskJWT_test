@@ -26,6 +26,9 @@
 1. Add path to virtualenv in PATH
 `export PATH="/home/pi/.local/bin/:$PATH"`
 
+1. Go to the root project's dir
+`cd ...Projects/FlaskJWT_test`
+
 1. Create virtual environment for project
 `virtualenv venv36`
 
