@@ -90,14 +90,21 @@ def free():
     return "Hello free"
 
 
+<<<<<<< HEAD
 @app.route('/humidity', methods=['PUT'])
 @jwt_required()
 def humidity():
+=======
+@app.route('/humidity-settings', methods=['PUT', 'GET'])
+# @jwt_required()
+def humidity_settings():
+>>>>>>> dd3917afc30a97fedc350367ce1e98baa1c40d7a
     if request.method == 'PUT':
         config = configparser.ConfigParser()
         config.read("/home/pi/poliv/global_config.conf")
         print("put")
         data = request.get_json()
+<<<<<<< HEAD
         time = data["freq"]
         threshold = data["threshold"]
         irrigation_time = data["irrigation_time"]
@@ -106,12 +113,76 @@ def humidity():
         config.set("time", "time_irrigation", "%s" % irrigation_time)
         with open("/home/pi/poliv/global_config.conf", "w") as config_file:
             config.write(config_file)
+=======
+
+        if "freq" in data.keys():
+            time = data["freq"]
+            config.set("time", "time_checking", "%s" % time)
+
+        if "threshold" in data.keys():
+            threshold = data["threshold"]
+            config.set("sensor", "critical_position", "%s" % threshold)
+
+        if "irrigation_time" in data.keys():
+            irrigation_time = data["irrigation_time"]
+            config.set("time", "time_irrigation", "%s" % irrigation_time)
+
+        with open("/home/pi/poliv/global_config.conf", "w") as config_file:
+            config.write(config_file)
+        
+        config.read("/home/pi/poliv/global_config.conf")
+        data = {
+            "freq": config.get("time", "time_checking"),
+            "threshold": config.get("sensor", "critical_position"),
+            "irrigation_time": config.get("time", "time_irrigation")
+        }
+        response = app.response_class(response=json.dumps(data), status=200, mimetype='application/json')
+        return response
+    else:
+        config = configparser.ConfigParser()
+        config.read("/home/pi/poliv/global_config.conf")
+        data = {
+            "freq": config.get("time", "time_checking"),
+            "threshold": config.get("sensor", "critical_position"),
+            "irrigation_time": config.get("time", "time_irrigation")
+        }
+>>>>>>> dd3917afc30a97fedc350367ce1e98baa1c40d7a
         #        os.execv('/home/pi/poliv/autopoliv.py', [' '])
         #        print("начался полив")
         response = app.response_class(response=json.dumps(data), status=200, mimetype='application/json')
         return response
 
 
+<<<<<<< HEAD
+=======
+@app.route('/humidity', methods=['GET'])
+# @jwt_required()
+def humidity():
+    if request.method == 'GET':
+        CLK = 11
+        MISO = 9
+        MOSI = 10
+        CS = 8
+        mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
+        a = mcp.read_adc(1)
+
+        percent = a * 100 / 1024
+        status = "Inactive" if a == 0 else "Active"
+        mes = {
+            "status": status,
+            "humidity":
+                {
+                    "absolute": str(a),
+                    "percent": str(round(percent, 1))
+                }
+        }
+
+        js = json.dumps(mes)
+        response = app.response_class(response=js, status=200, mimetype='application/json')
+        return response
+
+
+>>>>>>> dd3917afc30a97fedc350367ce1e98baa1c40d7a
 @app.route('/pump')
 def pump():
     Popen("echo 12 > /sys/class/gpio/export", shell=True)
@@ -152,6 +223,7 @@ def irrigation():
     return json.dumps(result)
 
 
+<<<<<<< HEAD
 @app.route('/show_humidity')
 # @jwt_required()
 def show_humidity():
@@ -178,5 +250,7 @@ def show_humidity():
     return response
 
 
+=======
+>>>>>>> dd3917afc30a97fedc350367ce1e98baa1c40d7a
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
